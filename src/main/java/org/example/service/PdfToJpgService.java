@@ -3,6 +3,7 @@ package org.example.service;
 import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.io.RandomAccessReadBufferedFile;
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.rendering.PDFRenderer;
 
 import javax.imageio.ImageIO;
@@ -14,14 +15,16 @@ public class PdfToJpgService {
 
     public void pdfToJpeg() throws IOException {
         try (PDDocument document = Loader.loadPDF(
-                new RandomAccessReadBufferedFile("/Users/vivianealvesdepontes/Downloads/Carta de apresentaçao.pdf"))) {
+                new RandomAccessReadBufferedFile("/Users/vivianealvesdepontes/Downloads/Curriculo_Fabricio_Alves.pdf"))) {
 
+            int totalPages = document.getNumberOfPages();
             PDFRenderer renderer = new PDFRenderer(document);
-            BufferedImage image = renderer.renderImage(0);
 
-            ImageIO.write(image, "JPEG", new File("/Users/vivianealvesdepontes/Downloads/Carta de apresentaçao.jpg"));
+            for (int pages = 0; pages < totalPages ; pages++) {
+                BufferedImage image = renderer.renderImage(pages);
+                ImageIO.write(image, "JPEG", new File("/Users/vivianealvesdepontes/Downloads/Curriculo_Fabricio_Alves page"+  pages +".jpg"));
 
-            document.close();
+            }
             System.out.println("JPG created");
         }
     }
