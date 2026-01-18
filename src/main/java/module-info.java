@@ -1,6 +1,9 @@
 module org.example.pdftransformer {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.desktop;
+    requires org.apache.pdfbox;
+    requires org.apache.pdfbox.io;
 
 
     opens org.example.pdftransformer to javafx.fxml;
